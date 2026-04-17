@@ -105,7 +105,7 @@ export default async function handler(req: any, res: any) {
   return app(req, res);
 }
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV !== "production") {
   (async () => {
     await initOnce();
     const port = 5000;

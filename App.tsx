@@ -9,6 +9,7 @@ import Home from "@/pages/Home";
 import ArticleDetail from "@/pages/ArticleDetail";
 import CategoryPage from "@/pages/CategoryPage";
 import About from "@/pages/About";
+import Mirofish from "@/pages/Mirofish";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -17,10 +18,12 @@ function Router() {
       <Header />
       <main className="flex-grow">
         <Switch>
-          <Route path="/" component={Home} />
+          <Route path="/" component={Mirofish} />
+          <Route path="/old-home" component={Home} />
           <Route path="/article/:slug" component={ArticleDetail} />
           <Route path="/category/:slug" component={CategoryPage} />
           <Route path="/about" component={About} />
+          <Route path="/mirofish" component={Mirofish} />
 
           {/* Posyandu Routes */}
           <Route path="/posyandu" component={PosyanduDashboard} />
