@@ -32,10 +32,10 @@ export async function registerRoutes(
         totalStakeholders: stakeholders.length,
         totalResearch: research.length,
         totalConnections: connections.length,
-        clusters: stakeholders.reduce((acc: any, s) => {
+        clusters: stakeholders.reduce((acc: Record<string, number>, s: any) => {
           acc[s.cluster] = (acc[s.cluster] || 0) + 1;
           return acc;
-        }, {})
+        }, {} as Record<string, number>)
       });
     } catch(e) {
       res.status(500).json({ error: "Failed to fetch stats" });

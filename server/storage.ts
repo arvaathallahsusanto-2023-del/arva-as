@@ -1,4 +1,4 @@
-import { db } from "./db";
+import { db } from "./db.js";
 import {
   articles,
   categories,
@@ -8,8 +8,8 @@ import {
   type Author,
   type InsertArticle,
   type ArticleWithRelations,
-} from "@shared/schema";
-import { eq, desc } from "drizzle-orm";
+} from "./schema.js";
+import { eq, desc, and } from "drizzle-orm";
 
 export interface IStorage {
   getArticles(categorySlug?: string, limit?: number): Promise<ArticleWithRelations[]>;
@@ -34,13 +34,15 @@ export class DatabaseStorage implements IStorage {
       orderBy: desc(articles.publishedAt),
       limit: limit,
       where: categorySlug
-        ? (articles, { exists, select }) =>
+        ? (table: any, { exists, select }: { exists: any, select: any }) =>
             exists(
               select()
                 .from(categories)
                 .where(
-                  eq(categories.slug, categorySlug) &&
-                  eq(categories.id, articles.categoryId)
+                  and(
+                    eq(categories.slug, categorySlug),
+                    eq(categories.id, table.categoryId)
+                  )
                 )
             )
         : undefined,
