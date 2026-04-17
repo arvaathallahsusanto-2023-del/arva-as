@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 import {
   Library,
   Network,
@@ -184,9 +185,11 @@ export default function Mirofish() {
             ))}
           </div>
 
-          <button className="px-4 py-2 text-sm font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-black rounded-full hover:opacity-90 transition-opacity flex items-center gap-1.5">
-            Join Network <ChevronRight className="w-4 h-4" />
-          </button>
+          <Link href="/ecosystem/register">
+            <button className="px-4 py-2 text-sm font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-black rounded-full hover:opacity-90 transition-opacity flex items-center gap-1.5">
+              Join Network <ChevronRight className="w-4 h-4" />
+            </button>
+          </Link>
         </div>
       </nav>
 
@@ -226,20 +229,24 @@ export default function Mirofish() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <motion.button
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold rounded-full transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,211,238,0.35)] flex items-center gap-2 text-base"
-              >
-                Explore Ecosystem <ArrowRight className="w-5 h-5" />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-colors font-medium text-base"
-              >
-                View Research Database
-              </motion.button>
+              <Link href="/ecosystem/network">
+                <motion.button
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold rounded-full transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,211,238,0.35)] flex items-center gap-2 text-base"
+                >
+                  Explore Ecosystem <ArrowRight className="w-5 h-5" />
+                </motion.button>
+              </Link>
+              <Link href="/ecosystem">
+                <motion.button
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-colors font-medium text-base"
+                >
+                  View Research Database
+                </motion.button>
+              </Link>
             </div>
           </motion.div>
 
@@ -445,9 +452,11 @@ export default function Mirofish() {
                 berkolaborasi membangun masa depan Ekonomi Islam yang lebih kuat.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold rounded-full hover:opacity-90 transition-opacity flex items-center gap-2">
-                  Daftar Sekarang <ArrowRight className="w-5 h-5" />
-                </button>
+                <Link href="/ecosystem/register">
+                  <button className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold rounded-full hover:opacity-90 transition-opacity flex items-center gap-2">
+                    Daftar Sekarang <ArrowRight className="w-5 h-5" />
+                  </button>
+                </Link>
                 <button className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-colors font-medium">
                   Pelajari Lebih Lanjut
                 </button>

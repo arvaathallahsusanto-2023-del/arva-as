@@ -124,10 +124,7 @@ export const posyanduRecordsRelations = relations(posyanduRecords, ({ one }) => 
 
 export const insertAuthorSchema = createInsertSchema(authors);
 export const insertCategorySchema = createInsertSchema(categories);
-export const insertArticleSchema = createInsertSchema(articles).omit({
-  id: true,
-  publishedAt: true
-});
+export const insertArticleSchema = createInsertSchema(articles);
 
 export const ecoStakeholdersRelations = relations(ecoStakeholders, ({ many }) => ({
   researchWorks: many(ecoResearchWorks),
