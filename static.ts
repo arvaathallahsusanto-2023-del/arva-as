@@ -55,9 +55,13 @@ export function serveStatic(app: Express) {
     }
     
     // Debug info for the user
-    let dirContent = "Not readable";
+    let rootContent = "Not readable";
+    let clientContent = "Not readable";
     try {
-      dirContent = fs.readdirSync(root).join(", ");
+      rootContent = fs.readdirSync(root).join(", ");
+    } catch(e) {}
+    try {
+      clientContent = fs.readdirSync(path.join(root, "client")).join(", ");
     } catch(e) {}
 
     res.status(404).send(`
@@ -68,7 +72,8 @@ export function serveStatic(app: Express) {
         <ul>
           ${pathsToTry.map(p => `<li><code>${p}</code> ${fs.existsSync(p) ? "✅" : "❌"}</li>`).join("")}
         </ul>
-        <p>Files in Root: <code>${dirContent}</code></p>
+        <p>Files in Root: <code>${rootContent}</code></p>
+        <p>Files in <b>client/</b>: <code>${clientContent}</code></p>
         <hr style="border-color: #1e293b; margin: 2rem 0;">
         <p style="font-size: 0.8rem; color: #64748b;">Please ensure <code>npm run build</code> has completed successfully.</p>
       </div>
