@@ -21,6 +21,14 @@ function Router() {
           <Route path="/article/:slug" component={ArticleDetail} />
           <Route path="/category/:slug" component={CategoryPage} />
           <Route path="/about" component={About} />
+
+          {/* Posyandu Routes */}
+          <Route path="/posyandu" component={PosyanduDashboard} />
+          <Route path="/posyandu/patients" component={PosyanduPatientList} />
+          <Route path="/posyandu/register" component={PosyanduRegister} />
+          <Route path="/posyandu/record/new" component={PosyanduInputRecord} />
+          <Route path="/posyandu/patients/:id" component={PosyanduPatientDetail} />
+
           <Route component={NotFound} />
         </Switch>
       </main>

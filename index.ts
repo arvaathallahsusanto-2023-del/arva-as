@@ -104,3 +104,13 @@ export default async function handler(req: any, res: any) {
   await initOnce();
   return app(req, res);
 }
+
+if (process.env.NODE_ENV === "development") {
+  (async () => {
+    await initOnce();
+    const port = 5000;
+    httpServer.listen(port, "0.0.0.0", () => {
+      log(`Server listening on port ${port}`);
+    });
+  })();
+}
