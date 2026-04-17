@@ -3,36 +3,43 @@ import fs from "fs";
 import path from "path";
 
 export function serveStatic(app: Express) {
-  // Gunakan process.cwd() karena __dirname sering bermasalah di bundle Vercel (ESM)
-  const rootDir = process.cwd();
+  // Version: 1.0.1 - Universal Path Fix
+  const root = process.cwd();
+  console.log(`[Arvaas-Static] Starting from: ${root}`);
   
-  // Vercel /var/task adalah root project. File build ada di dist/public
-  let distPath = path.resolve(rootDir, "dist", "public");
+  // Kita coba cari folder build. Di Vercel bisa jadi 'dist/public' atau langsung 'public'
+  const pathsToTry = [
+    path.resolve(root, "dist", "public"),
+    path.resolve(root, "public"),
+    path.join(root, "dist", "public"),
+    "/var/task/dist/public"
+  ];
 
-  if (!fs.existsSync(distPath)) {
-    // Fallback jika struktur folder berbeda di environment Vercel
-    const altPath = path.resolve(rootDir, "public");
-    if (fs.existsSync(altPath)) {
-      distPath = altPath;
-    } else {
-      console.warn(`[Static] Directory not found. Tried: ${distPath} and ${altPath}`);
+  let finalPath = "";
+  for (const p of pathsToTry) {
+    if (fs.existsSync(p)) {
+      finalPath = p;
+      console.log(`[Arvaas-Static] Found build directory at: ${p}`);
+      break;
     }
   }
 
-  app.use(express.static(distPath));
+  if (!finalPath) {
+    console.error(`[Arvaas-Static] CRITICAL: Build directory not found! Checked: ${pathsToTry.join(", ")}`);
+    // Jangan lempar error agar server tidak crash total, biarkan API tetap jalan
+    return;
+  }
 
-  // Fallback ke index.html untuk Single Page Application (SPA) - Mirofish/Dashboard
+  app.use(express.static(finalPath));
+
   app.use("*", (req, res, next) => {
-    // Jangan intercept request API
-    if (req.path.startsWith("/api")) {
-      return next();
-    }
+    if (req.path.startsWith("/api")) return next();
     
-    const indexPath = path.resolve(distPath, "index.html");
-    if (fs.existsSync(indexPath)) {
-      res.sendFile(indexPath);
+    const indexFile = path.resolve(finalPath, "index.html");
+    if (fs.existsSync(indexFile)) {
+      res.sendFile(indexFile);
     } else {
-      res.status(404).send("Not Found");
+      res.status(404).send("SPA Index Not Found");
     }
   });
 }
