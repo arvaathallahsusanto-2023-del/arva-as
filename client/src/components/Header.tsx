@@ -24,9 +24,6 @@ export function Header() {
           <Link href="/ecosystem/network">
             <a className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Network</a>
           </Link>
-          <Link href="/posyandu">
-            <a className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Posyandu</a>
-          </Link>
         </nav>
 
         <Link href="/ecosystem/register">

@@ -25,7 +25,6 @@ export function Footer() {
               <li><Link href="/"><a className="hover:text-cyan-400 transition-colors">Home</a></Link></li>
               <li><Link href="/ecosystem"><a className="hover:text-cyan-400 transition-colors">Dashboard</a></Link></li>
               <li><Link href="/ecosystem/network"><a className="hover:text-cyan-400 transition-colors">Network</a></Link></li>
-              <li><Link href="/posyandu"><a className="hover:text-cyan-400 transition-colors">Posyandu Digital</a></Link></li>
             </ul>
           </div>
 

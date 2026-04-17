@@ -33,29 +33,6 @@ export const articles = pgTable("articles", {
   publishedAt: timestamp("published_at").defaultNow(),
 });
 
-export const posyanduPatients = pgTable("posyandu_patients", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  nik: text("nik").unique(), // Optional for infants, required for adults
-  type: text("type").notNull(), // "BAYI_BALITA", "IBU_HAMIL", "LANSIA"
-  dob: timestamp("dob").notNull(),
-  gender: text("gender").notNull(), // "L", "P"
-  parentName: text("parent_name"), // For infants
-  address: text("address"),
-  registeredAt: timestamp("registered_at").defaultNow(),
-});
-
-export const posyanduRecords = pgTable("posyandu_records", {
-  id: serial("id").primaryKey(),
-  patientId: integer("patient_id").references(() => posyanduPatients.id),
-  checkupDate: timestamp("checkup_date").defaultNow(),
-  weight: text("weight"), // stored as text to allow flexible units or notes, or numeric string
-  height: text("height"),
-  headCircumference: text("head_circumference"), // for infants
-  bloodPressure: text("blood_pressure"), // for elderly/pregnant
-  notes: text("notes"),
-  officerName: text("officer_name"),
-});
 
 // === ECOSYSTEM TABLES ===
 
@@ -111,17 +88,6 @@ export const categoriesRelations = relations(categories, ({ many }) => ({
 }));
 
 
-export const posyanduPatientsRelations = relations(posyanduPatients, ({ many }) => ({
-  records: many(posyanduRecords),
-}));
-
-export const posyanduRecordsRelations = relations(posyanduRecords, ({ one }) => ({
-  patient: one(posyanduPatients, {
-    fields: [posyanduRecords.patientId],
-    references: [posyanduPatients.id],
-  }),
-}));
-
 export const insertAuthorSchema = createInsertSchema(authors);
 export const insertCategorySchema = createInsertSchema(categories);
 export const insertArticleSchema = createInsertSchema(articles);
@@ -151,9 +117,6 @@ export const ecoConnectionsRelations = relations(ecoConnections, ({ one }) => ({
     relationName: "targetConnection"
   }),
 }));
-
-export const insertPosyanduPatientSchema = createInsertSchema(posyanduPatients);
-export const insertPosyanduRecordSchema = createInsertSchema(posyanduRecords);
 
 export const insertEcoStakeholderSchema = createInsertSchema(ecoStakeholders);
 export const insertEcoResearchWorkSchema = createInsertSchema(ecoResearchWorks);
